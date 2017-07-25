@@ -1,0 +1,53 @@
+<html ng-app='app'>
+<head>
+  <script src='bower_components/angular/angular.js'></script>
+  <script src='bower_components/angular-route/angular-route.js'></script>
+    <script type='text/javascript'>
+       var app = angular.module('app', ['ngRoute']);
+       app.config(['$routeProvider', function($routeProvider) {
+         $routeProvider
+         .when('/main', {
+           controller: 'MainController',
+           templateUrl: "partials/_main.html"
+         })
+         .when('/:index', {
+           controller: 'UserController',
+           templateUrl: "partials/_user.html"
+         })
+         .otherwise({
+           redirectTo: '/main'
+         })
+       }]);
+
+       app.factory("MainFactory", ["$http", function($http) {
+         console.log("MainFactory loaded");
+         var users = [
+           { name: 'Charlie', age: 30 },
+           { name: 'Charles', age: 300 },
+         ];
+         var factory = {};
+         factory.users = users;
+         return factory;
+       }]);
+
+       app.controller('MainController', ['$scope', 'MainFactory', function ($scope, MainFactory){
+       $scope.users = MainFactory.users;
+       $scope.addUser = function() {
+         $scope.users.push($scope.newUser);
+         $scope.newUser = {};
+       };
+     }]);
+      app.controller('UserController', ['$scope', 'MainFactory', '$routeParams', function($scope, MainFactory, $routeParams) {
+        $scope.user = {};
+        MainFactory.getUsers(function(data) {
+          $scope.user = data[$routeParams.index]
+        })
+      }]);
+    </script>
+  </head>
+<body>
+  <div ng-controller='MainController'>
+    <div ng-view=''></div>
+  </div>
+</body>
+</html>

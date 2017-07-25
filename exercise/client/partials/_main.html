@@ -1,0 +1,8 @@
+<form>
+   Name: <input type='text' ng-model='newUser.name'>
+   Age: <input type='number' ng-model='newUser.age'>
+   <input type='submit' value='add new user' ng-click='addUser()'>
+</form>
+<ul>
+    <li ng-repeat="user in users">Name: <a href="#!/{{$index}}">{{ user.name }}</a></li>
+</ul>

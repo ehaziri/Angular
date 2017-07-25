@@ -1,0 +1,19 @@
+<html ng-app='app'>
+<head>
+    <script src='bower_components/angular/angular.js'></script>
+    <script type='text/javascript'>
+       var myApp = angular.module('app', []);
+       myApp.controller('divController', function ($scope){
+        $scope.myName = 'Xona';
+        $scope.myFavoriteLanguage = 'JavaScript';
+        $scope.myFavoriteJSLibrary = 'Angular';
+      });
+    </script>
+  </head>
+<body>
+  <div ng-controller='divController'>
+    {{ 3+2 }}
+    <p>Hello my name is <span ng-bind='myName'></span>, my favorite Language is {{ myFavoriteLanguage }}, because the {{ myFavoriteJSLibrary}} is awesome.</p>
+  </div>
+</body>
+</html>

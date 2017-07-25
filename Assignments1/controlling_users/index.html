@@ -1,0 +1,71 @@
+<html ng-app='app'>
+<head>
+    <style>
+    input{
+      display: block;
+    }
+    .left, .right{
+      vertical-align: top;
+      width: 45%;
+      display: inline-block;
+      border:2px solid pink;
+    }
+    </style>
+    <script src='bower_components/angular/angular.js'></script>
+    <script type='text/javascript'>
+       var myApp = angular.module('app', []);
+       myApp.controller('divController', function ($scope){
+         $scope.users = [
+           {
+            firstname: "Charlie",
+            lastname: "Mead",
+            language: "JavaScript"
+           }
+         ];
+         $scope.createUser = function() {
+           $scope.users.push($scope.newUser);
+           $scope.newUser = {};
+         };
+         $scope.deleteUser = function(userToDelete) {
+           $scope.users = $scope.users.filter(function(userObj) {
+             return userObj !== userToDelete;
+           })
+         }
+
+      });
+    </script>
+  </head>
+<body>
+  <h1>Controlling Users</h1>
+  <div ng-controller='divController'>
+    <div class="left">
+    <!-- <form ng-submit="addFood()"> -->
+      <form>
+        First Name <input type="text" ng-model='newUser.firstname'>
+        Last Name <input type="text" ng-model='newUser.lastname'>
+        Favorite Language <input type="text" ng-model='newUser.language'>
+        <input type="submit" value="Create User" ng-click='createUser()'>
+      </form>
+    </div>
+    <div class="right">
+      <table>
+       <thead>
+         <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Fav Language</th>
+          <th>Actions</th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr ng-repeat='user in users'>
+          <td>{{ user.firstname }}</td>
+          <td>{{ user.lastname }}</td>
+          <td>{{ user.language }}</td>
+          <td><button ng-click='deleteUser(user)'>Delete User</button></td>
+         </tr>
+        </tbody>
+      </table>
+    </div>
+</body>
+</html>
